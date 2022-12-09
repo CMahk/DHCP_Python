@@ -8,11 +8,14 @@ ip_range = list(range(2, 254))
 ip_pool = {"127.0.0.1": "192.168.0.1"}
 
 def dhcp_getip(MAC):
- index = randint(2, len(ip_range))
- ip = ip_range[index]
- ip_pool[MAC] = "192.168.0." + str(ip)
- del ip_range[index]
- return ip_pool[MAC] # 192.168.1.x
+  if MAC not in ip_pool.keys():
+    index = randint(2, len(ip_range))
+    ip = ip_range[index]
+    ip_pool[MAC] = "192.168.0." + str(ip)
+    del ip_range[index]
+    return ip_pool[MAC] # 192.168.1.x
+  else:
+    return ip_pool[MAC]
 
 def dhcp_offer(MAC, XID):
 
